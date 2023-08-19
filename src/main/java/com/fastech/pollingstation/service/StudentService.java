@@ -1,9 +1,13 @@
 package com.fastech.pollingstation.service;
 
 import com.fastech.pollingstation.dto.StudentDto;
+import com.fastech.pollingstation.dto.StudentPollDto;
 import com.fastech.pollingstation.entity.Class_;
+import com.fastech.pollingstation.entity.Poll;
 import com.fastech.pollingstation.entity.Student;
+import com.fastech.pollingstation.entity.Student_Poll;
 import com.fastech.pollingstation.repository.PollRepository;
+import com.fastech.pollingstation.repository.StudentPollRepository;
 import com.fastech.pollingstation.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,12 @@ public class StudentService {
     private StudentRepository studentRepository;
     @Autowired
     private ClassService classService;
+    @Autowired
+    private PollService pollService;
+
+    @Autowired
+    private StudentPollRepository studentPollRepository;
+
 
     public Student addStudent(StudentDto dto){
         Class_ classFound = classService.findClassById(dto.getClassId());
@@ -62,5 +72,22 @@ public class StudentService {
         studentRepository.delete(student);
         return "Deleted student";
     }
+
+
+    public String selectStudentForPoll(StudentPollDto dto){
+
+        Student selectedStudent = findStudentById(dto.getStudentId());
+        Poll selectedPoll = pollService.findPollById(dto.getPollId());
+        Student_Poll studentPoll = new Student_Poll();
+        studentPoll.setPoll(selectedPoll);
+        studentPoll.setStudent(selectedStudent);
+        studentPollRepository.save(studentPoll);
+        return "Selected Student added for the Poll";
+    }
+
+
+
+
+
 
 }

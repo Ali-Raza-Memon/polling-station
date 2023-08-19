@@ -48,10 +48,10 @@ public class PollController {
         List<Poll> polls = pollService.findPollsByStudentId(studentId);
 
         if (polls.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+           return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
 
-        return new ResponseEntity<>(polls, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(polls);
     }
 
 

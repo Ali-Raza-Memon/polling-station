@@ -5,26 +5,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "polls")
+@Table(name = "polls_students")
 @Setter
 @Getter
-public class Poll {
+public class Student_Poll {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String title;
-    private Date createdAt;
-    private Date endAt;
-    private Boolean isActive;
+
     @ManyToOne
     @JsonIgnore
-    Class_ class_;
+    Poll poll;
 
-    @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
+    @ManyToOne
     @JsonIgnore
-    List<Student_Poll> studentPolls;
+    Student student;
+
 }

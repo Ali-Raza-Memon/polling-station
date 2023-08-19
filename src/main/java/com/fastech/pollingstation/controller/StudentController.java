@@ -1,6 +1,7 @@
 package com.fastech.pollingstation.controller;
 
 import com.fastech.pollingstation.dto.StudentDto;
+import com.fastech.pollingstation.dto.StudentPollDto;
 import com.fastech.pollingstation.repository.StudentRepository;
 import com.fastech.pollingstation.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class StudentController {
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteStudent(Long id){
         return ResponseEntity.status(HttpStatus.OK).body(studentService.deleteStudent(id));
+    }
+
+    @PostMapping("/select/poll")
+    public ResponseEntity<?> selectStudentForPoll(@RequestBody StudentPollDto dto){
+        return ResponseEntity.status(HttpStatus.OK).body(studentService.selectStudentForPoll(dto));
     }
 
 
